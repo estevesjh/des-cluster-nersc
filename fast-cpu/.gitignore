@@ -1,0 +1,6 @@
+# SLURM job output — never track (regenerated every run, can be huge)
+*.log
+*.error
+*.out
+__pycache__/
+*.pyc
