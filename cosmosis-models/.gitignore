@@ -1,0 +1,5 @@
+# editor / python build artifacts — never track
+*.swp
+.*.swp
+__pycache__/
+*.pyc
