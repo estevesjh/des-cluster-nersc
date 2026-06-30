@@ -50,7 +50,7 @@ radii, interpolate it onto this grid before storing.
 
 ## 2. What you change vs. what you keep
 
-- **CHANGE:** `data_NC` and `data_Shear` → your measured simulation values.
+- **CHANGE:** `data_NC` and `data_Shear` → the new data vector file.
 - **KEEP:** `invcov_NC` and `invcov_Shear` → copy them straight from the existing
   mock file. This is exactly what you asked for: same covariance, new data.
 
@@ -70,7 +70,7 @@ import numpy as np
 # 1. Load the existing mock to inherit its covariance (and the layout template).
 mock = np.load("data/mock/mock_dv_widePlanck_jkcov.npz")
 
-# 2. Your measured simulation observables, on the SAME binning/radii as §1.
+# 2. Simulation observables, on the SAME binning/radii as §1.
 #    data_NC    -> (12,)  : 4 richness x 3 z number counts
 #    data_Shear -> (120,) : 12 bins x 10 radii, flattened bin-major
 data_NC    = my_sim_number_counts      # shape (12,)
@@ -126,27 +126,7 @@ log_space = F
 
 ---
 
-## 5. Important: this is no longer a closure test
-
-The mock data vector was the pipeline's own noiseless theory, so `logL ≈ 0` at
-the truth and the posterior must recover the fiducial parameters. With **real
-simulation data**, that is no longer true:
-
-- `logL` at the input cosmology will **not** be ~0 — model misspecification
-  (projection, radial grid, selection bias, sim systematics) shows up as a real
-  offset.
-- A recovery **bias** (posterior away from the sim's input cosmology) is now a
-  physics result to interpret, not a bug.
-
-This is exactly the role `cosmosis-models/mock_mcmc_buzzard.ini` plays (it
-compares against a Buzzard sim DV instead of self-closure theory) — you can use
-it as a reference for a "real-data" config. Note it currently expects a
-180-vector (15 radii); if you stick with the 120/10 layout above, use
-`mock_mcmc_cp_camb.ini` as your base instead.
-
----
-
-## 6. Quick checklist
+## 5. Quick checklist
 
 - [ ] Shear on the **10 r_perp radii** and **12 bins** from the `.ini` (interpolate if not).
 - [ ] `data_Shear` flattened **bin-major** → `(120,)`.
