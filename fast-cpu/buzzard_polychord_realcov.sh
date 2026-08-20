@@ -18,6 +18,11 @@
 # errors should un-rail the posterior. Frozen-physics speed -> ~3h inside the
 # 9h cap; resume with polychord.resume=T if it walls.
 
+# *** HOLD (des-nersc#3): do NOT submit until the DV is rebuilt from
+# xtang126's current npz -- the dv_buzzard_* files this script loads are
+# stale (NC x1.186, harvester 0.35 z-edges, unresolved radius/Sigma_crit
+# conventions), while the model config below uses the CORRECT
+# seam-excluding edges: running the pair as-is is inconsistent. ***
 # BUZZARD OVERRIDE INI (issues #1/#2 + y3_cluster_cpp#12): drives
 # mock_mcmc_cp_camb_buzzard.ini -- observed-z edges [0.20,0.33) [0.37,0.50)
 # [0.50,0.65) per the xtang126 MockDataVector.ipynb code (cell 3; the
