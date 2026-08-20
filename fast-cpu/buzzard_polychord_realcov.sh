@@ -18,10 +18,11 @@
 # errors should un-rail the posterior. Frozen-physics speed -> ~3h inside the
 # 9h cap; resume with polychord.resume=T if it walls.
 
-# z-EDGE FIX (issue #2): drives mock_mcmc_cp_camb_buzzard.ini, which
-# overrides the observed-z bin edges to the Buzzard mock binning
-# [0.20,0.33) [0.37,0.50) [0.50,0.65) (box seam excluded). Outputs go to
-# fresh *_zfix dirs so the pre-fix converged chains stay comparable.
+# BUZZARD OVERRIDE INI (issues #1/#2 + y3_cluster_cpp#12): drives
+# mock_mcmc_cp_camb_buzzard.ini (dense nz=400 distances grid; observed-z
+# edges deliberately unchanged -- the DV harvester bins z_obs at
+# 0.20/0.35/0.50/0.65 and the seam is a TRUE-z cut, see the ini header).
+# Outputs go to fresh *_zfix dirs so prior converged chains stay comparable.
 set -euo pipefail
 
 cd /pscratch/sd/j/jesteves/github/des-cluster-nersc/fast-cpu
