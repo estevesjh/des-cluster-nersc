@@ -20,10 +20,11 @@
 # railing and Omega_m*h returns toward fiducial, the h-unit fix is confirmed.
 
 # BUZZARD OVERRIDE INI (issues #1/#2 + y3_cluster_cpp#12): drives
-# mock_mcmc_cp_camb_buzzard.ini (dense nz=400 distances grid; observed-z
-# edges deliberately unchanged -- the DV harvester bins z_obs at
-# 0.20/0.35/0.50/0.65 and the seam is a TRUE-z cut, see the ini header).
-# Outputs go to fresh *_zfix dirs so prior converged chains stay comparable.
+# mock_mcmc_cp_camb_buzzard.ini -- observed-z edges [0.20,0.33) [0.37,0.50)
+# [0.50,0.65) per the xtang126 MockDataVector.ipynb code (cell 3; the
+# notebook header and this repo's build_buzzard_datavector.py 0.35 edges
+# are both wrong/non-production) + dense nz=400 distances grid. Outputs
+# go to fresh *_zfix dirs so prior converged chains stay comparable.
 set -euo pipefail
 
 cd /pscratch/sd/j/jesteves/github/des-cluster-nersc/fast-cpu
