@@ -54,7 +54,9 @@ for b in range(12):
     R_com = R_phys * H                                 # physical Mpc -> physical Mpc/h (x h;
     #   pipeline r_perp is physical Mpc/h: R_mis = theta*D_A, D_A physical; matches
     #   xtang126 targetR build R_src = radii_phys*0.70. No (1+z): NOT comoving.)
-    amp = H ** 2                                        # physical Msun/pc^2 -> little-h (x h^2)
+    amp = 1.0 / H                                       # physical Msun/pc^2 -> little-h h Msun/pc^2
+    #   (x 1/h): anchored to analytic NFW -- pipeline 1-halo = little-h NFW to 1%, and
+    #   DeltaSigma_littleh / DeltaSigma_physical = 1/h. (NOT x h^2; that was wrong by 1/h^3.)
     lnR = np.log(R_com)
     data_Shear[b] = np.exp(np.interp(lng, lnR, np.log(DS[b] * amp)))
     var_phys = np.diag(cov_DS[b])                       # (11,)
