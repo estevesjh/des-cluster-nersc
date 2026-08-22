@@ -9,6 +9,15 @@ independent. Comoving (z_density=0) run overlaid for contrast.
 
 theory DeltaSigma = shear1hmissel/vals / tile(NC,10) + shear_prj/cl   (little-h)
 Data: dv_buzzard_deltasigma_heidi.npz (lambda_obs Heidi stack, pipeline units, JK cov).
+
+*** CAVEAT -- THIS IS AN APPROXIMATION, NOT THE RIGOROUS RESULT (J. Esteves, correct):
+The 1-halo radial profile phi(R,lnM) in the C++ (n_operator_sel_gl_t.hh) is z-FREE;
+the z-integral is folded into the weights Wb. one_halo_z_density bakes a SINGLE
+(1+z_bin)^3 into that z-free table, so the (1+z)^3 ends up OUTSIDE the z-integral
+(evaluated at the bin centre), not inside it -- and (1+z)^3 is not even a clean
+DeltaSigma multiplier (it shifts R200/rho_s non-separably). The rigorous fix is a
+3-D (R,M,z) NFW table with rho_m(z) inside each slice + evaluating phi(R,M,z) INSIDE
+the SelGLCore z-integral. This plot is the bin-centre approximation (~5-15% off). ***
 """
 import os
 import numpy as np
