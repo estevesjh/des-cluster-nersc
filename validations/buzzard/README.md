@@ -30,6 +30,7 @@ are quoted as **physical M200m** (200·ρ_m(z)) unless a figure says CLensPy/fro
 | 4 | **Density at R200m ∝ (1+z)³** (ρ, Σ, ΔΣ) | `investigate_R200m_clenspy.py` | ✅ physical (1+z)³, mass-collapsed; pipeline is comoving. **issue #22**. See report. |
 | 5 | **Fitting recipe** NFW+2h, R>0.2 | `fit_profiles_clenspy.py` | ✅ CLensPy MAX(NFW, b·2h); recovers consistent M,c across ρ/Σ/ΔΣ. |
 | 6 | **Stacking & selection** | `heidi_stacking_demo.py`, `richness_vs_mass_concentration.py` | ✅ Heidi's (logM,z)-matched stack = selection bias; λ_obs adds **no** concentration bias (mass-mixing lowers c ~5–10%). |
+| 7 | **λ_obs ΔΣ data vector + JK cov** (pipeline units) | `../build_buzzard_dv_deltasigma_heidi.py`, `jk_convergence_deltasigma.py` | ✅ ΔΣ (not γ_t) little-h; Heidi matched stack; K=50 JK cov (validated converged). → `data/mock/dv_buzzard_deltasigma_heidi.npz`. |
 
 All NFW / ΔΣ / 2-halo evaluation uses **CLensPy** (`clenspy.halo.NfwProfile`,
 `clenspy.halo.TwoHaloTerm`, `clenspy.cosmology.PkGrid`) — one code path everywhere.
@@ -72,7 +73,9 @@ Buzzard catalogs via `mock_cluster_buzzard/src/fileLoc.py`.
 ## Next steps
 
 1. Derive/validate the effective (1+z) power the comoving pipeline needs for the
-   projected ΔΣ.
-2. Re-make the ΔΣ data vector for **λ_obs-binned** clusters using Heidi's
-   (logM,z)-matched stacking (ΔΣ_ij).
-3. Build the jackknife covariance for that data vector.
+   projected ΔΣ — now testable with the ΔΣ data vector (test 7).
+2. ~~Re-make the ΔΣ data vector for λ_obs bins via Heidi's stacking~~ ✅ done (test 7,
+   pipeline units, ΔΣ not γ_t).
+3. ~~Build the jackknife covariance~~ ✅ done + validated converged at K=50 (test 7).
+   Realism to add: fold in optical-selection bias (for redMaPPer-like) and a
+   shape-noise error budget (the JK is amplitude-dominated, ~1–3%).

@@ -147,16 +147,46 @@ distinct systematic, modeled by xtang's B_sel, and deliberately not used here.)
 
 ---
 
+## 6. λ_obs ΔΣ data vector + JK covariance (pipeline units)
+
+Built the λ_obs-binned ΔΣ data vector (following xtang126's notebook) via **Heidi's
+(logM,z)-matched stacking**, kept as **ΔΣ (not γ_t)** in the **pipeline little-h
+convention**: radii = R_phys·h [physical Mpc/h], ΔΣ = ΔΣ_phys·(1/h) [h M⊙/pc²],
+regridded onto `geomspace(0.2,5,10)` Mpc/h, 12 bins z-major. Cross-check: bin0
+(λ20–30, z0.2–0.33) ΔΣ = 166.2 vs the independent `gamma_t_obs_c1` DV's 167.4 — <1%,
+so the unit conversion is right.
+
+![DeltaSigma data vector + covariance](dv_deltasigma_heidi.png)
+
+The **jackknife covariance** (K=50 KMeans sky patches) is dominated by a single
+**coherent-amplitude mode (~93% of the variance** = the bin's mean-mass uncertainty),
+so the per-bin 10×10 blocks are near-singular by construction (physical, not a bug).
+
+**JK validated** — frac-err vs N_patches:
+
+![JK convergence](jk_convergence_deltasigma.png)
+
+The fractional error **plateaus from N≈50 onward** for all 12 bins (only N=10 is
+noisy); even N=1000 patches (L≈52 Mpc/h) stays well above the ~20 Mpc/h independence
+floor (which corresponds to ~6700 patches over this 4946 deg² footprint). So **K=50 is
+adequate**. Per-bin frac-err runs ~0.6–1% (low richness) to ~2–3% (high richness,
+fewer clusters), at R~1 Mpc.
+
+Products: `data/mock/dv_buzzard_deltasigma_heidi.npz` (`data_Shear`=ΔΣ little-h,
+`cov_Shear`/`invcov_Shear` block-diagonal, `data_NC`, `radii` Mpc/h);
+builder `validations/build_buzzard_dv_deltasigma_heidi.py`;
+JK test `validations/buzzard/jk_convergence_deltasigma.py`.
+
 ## Next steps
 
 1. **Answer the (1+z) factor.** Derive/validate the effective (1+z) power the
    *comoving* pipeline needs for the projected ΔΣ (bulk (1+z)³ in 3D → ~(1+z)^0.7–1
-   after line-of-sight projection). This is the remaining open question.
-2. **Re-make the ΔΣ data vector for λ_obs-binned clusters** using **Heidi's
-   (logM,z)-matched stacking** (`richness_vs_mass_concentration.py` +
-   `heidi_stacking_demo.py` provide the machinery) to build ΔΣ_ij.
-3. **Build the jackknife covariance** for that data vector (KMeans sky patches, as in
-   `MockDataVector.ipynb` §8.3).
+   after line-of-sight projection). This is the remaining open question — now testable
+   with the ΔΣ data vector above.
+2. **Selection realism:** the current DV uses λ_obs (no selection bias, B_sel≈1). Fold
+   in the optical-selection bias for the real (redMaPPer-like) case if needed.
+3. **Covariance realism:** the tight JK (~1–3%) is amplitude-dominated; add
+   shape-noise / a realistic error budget before quoting absolute χ².
 
 ---
 
