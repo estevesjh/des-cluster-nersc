@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=64
 #SBATCH --cpus-per-task=2
-#SBATCH --time=24:00:00
+#SBATCH --time=05:00:00
 #SBATCH --job-name=bsel_nob_prod
 #SBATCH --output=/pscratch/sd/j/jesteves/github/des-cluster-nersc/fast-cpu/logs/buzzard_m200m_bsel_nobsel_prod_%j.log
 #SBATCH --error=/pscratch/sd/j/jesteves/github/des-cluster-nersc/fast-cpu/logs/buzzard_m200m_bsel_nobsel_prod_%j.error

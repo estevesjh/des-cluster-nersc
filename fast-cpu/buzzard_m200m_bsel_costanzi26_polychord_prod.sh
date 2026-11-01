@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=64
 #SBATCH --cpus-per-task=2
-#SBATCH --time=24:00:00
+#SBATCH --time=12:00:00
 #SBATCH --job-name=bsel_c26_prod
 #SBATCH --output=/pscratch/sd/j/jesteves/github/des-cluster-nersc/fast-cpu/logs/buzzard_m200m_bsel_costanzi26_prod_%j.log
 #SBATCH --error=/pscratch/sd/j/jesteves/github/des-cluster-nersc/fast-cpu/logs/buzzard_m200m_bsel_costanzi26_prod_%j.error
@@ -17,7 +17,7 @@
 #           the mock's injected B_sel (Costanzi+2026 Eq. C1, Matteo's DeltaSigma constants).
 #   Cost:   ~0.7 s (run 1) / ~0.8 s (run 2) per likelihood call per rank; the As chain took ~3 h on 64 ranks.
 # The debug job (debug QOS, 30 min) verifies MPI and runs the first ~26 min of the chain;
-# the prod job (shared, afterok on debug) resumes it.  Re-submit the prod script to continue.
+# the prod job (shared) can also start the chain on its own.  Resume-safe: re-submit to continue.
 set -euo pipefail
 
 # Environment: the owner's standard init (CosmoSIS + y3cl_je + Y3_CLUSTER_CPP_DIR on pscratch).
